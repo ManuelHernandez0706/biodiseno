@@ -1,0 +1,1368 @@
+<MenuScreen>:
+    name: 'menu'
+        
+    Image:
+        source: 'logo1.png'
+        pos_hint: {'center_x':0.5, 'center_y':0.7}
+    MDLabel:
+        text: 'Seleccion de Usuario'
+        font_style: 'H5'
+        halign: 'center'
+        pos_hint: {'center_x':0.5, 'center_y':0.35}
+        bold: True
+    MDRectangleFlatButton:
+        text: 'Médico'
+        pos_hint: {'center_x':0.5, 'center_y':0.225}
+        on_press: root.manager.current = 'medico'
+    MDRectangleFlatButton:
+        text: 'Paciente'
+        pos_hint: {'center_x':0.5, 'center_y':0.125}
+        on_press: root.manager.current = 'paciente'
+     
+<MedicoScreen>:
+    name: 'medico'
+    email: email
+    clave: clave
+    
+    MDLabel:
+        text: 'Inicio de Sesión del Médico'
+        font_style: 'H4'
+        halign: 'center'
+        pos_hint: {'center_x':0.5, 'center_y':0.85}
+        bold: True
+    MDTextField:
+        id: email
+        hint_text: "Ingrese el correo"
+        icon_right: "email"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.675}
+        size_hint_x: None 
+        width: 290
+    MDTextField:
+        id: clave
+        hint_text: "Ingrese la clave"
+        helper_text: "O haga click en 'olvidé la clave'"
+        helper_text_mode: "on_focus"
+        password: True
+        pos_hint: {'center_x':0.5, 'center_y':0.575}
+        size_hint_x: None 
+        width: 290
+    MDIconButton:
+        icon: "eye-off"
+        ripple_scale: .5
+        pos_hint: {"center_y": 0.58}
+        pos: clave.width - self.width + dp(8), 0
+        on_release:
+            self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+            clave.password = False if clave.password is True else True    
+    MDRectangleFlatButton:
+        text:'Ingresar'
+        pos_hint:{'center_x':0.5,'center_y':0.45}
+        on_release: root.show_data()
+    MDRectangleFlatButton:
+        text:'Crear Usuario'
+        pos_hint:{'center_x':0.5,'center_y':0.35}
+        on_release: root.manager.current = 'crear_usuario'
+        on_release: root.reset()
+
+    MDRectangleFlatButton:
+        text:'Olvidé la clave'
+        pos_hint:{'center_x':0.5,'center_y':0.25}
+        on_release: root.manager.current = 'recuperar_cuenta'
+        on_release: root.reset() 
+        
+    MDRectangleFlatButton:
+        text: 'Salir'
+        pos_hint: {'center_x':0.5, 'center_y':0.15}
+        on_release: root.manager.current = 'menu'
+        on_release: root.reset()
+        
+<PacienteScreen>:
+    name: 'paciente'
+    dni: dni
+    
+    MDLabel:
+        text: 'Ingreso de Sesión del Paciente'
+        font_style: 'H4'
+        halign: 'center'
+        pos_hint: {'center_x':0.5, 'center_y':0.825}
+        bold: True
+    MDLabel:
+        text: 'Debe estar vinculado con su Centro de Salud antes de poder ingresar'
+        font_style: 'Subtitle1'
+        halign: 'center'
+        pos_hint:{'center_x':0.5, 'center_y':0.65}
+    MDTextField:
+        id: dni
+        hint_text: "Ingrese su DNI vinculado"
+        icon_right: "account"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.5}
+        size_hint_x: None 
+        width: 290
+    
+    MDRectangleFlatButton:
+        text:'Ingresar'
+        pos_hint:{'center_x':0.5,'center_y':0.35}
+        on_release: root.ingresar()
+    MDRectangleFlatButton:
+        text: 'Salir'
+        pos_hint: {'center_x':0.5, 'center_y':0.2}
+        on_release: 
+            root.manager.current = 'menu'
+            root.reset()
+
+<CrearUsuario>:
+    name: 'crear_usuario'
+    usuario: usuario
+    clave: clave
+    numero: numero
+    email: email
+    MDLabel:
+        text: 'Crear Usuario'
+        halign: 'center'
+        font_style: 'H5'
+        text_color: app.theme_cls.primary_color
+        bold: True
+        pos_hint: {'center_x':0.5, 'center_y':0.9}
+    MDLabel:
+        text: 'Por favor, ingrese los siguientes datos:'
+        halign: 'center'
+        font_style: 'Subtitle1'
+        text_color: app.theme_cls.primary_color
+        bold: True
+        pos_hint: {'center_x':0.5, 'center_y':0.8}
+    MDTextField:
+        id: email
+        hint_text: "Ingrese su correo"
+        icon_right: "email"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.7}
+        size_hint_x: None 
+        width: 290   
+    MDTextField:
+        id: usuario
+        hint_text: "Ingrese su nombre de usuario"
+        icon_right: "account"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.59}
+        size_hint_x: None 
+        width: 290
+        max_text_length: 14
+    MDTextField:
+        id: clave
+        hint_text: "Ingrese la clave (min. 6 caract.)"
+        password: True
+        pos_hint: {'center_x':0.5, 'center_y':0.48}
+        size_hint_x: None 
+        width: 290
+    MDIconButton:
+        icon: "eye-off"
+        ripple_scale: .5
+        pos_hint: {"center_y": 0.48}
+        pos: clave.width - self.width + dp(8), 0
+        on_release:
+            self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+            clave.password = False if clave.password is True else True 
+    MDTextField:
+        id: numero
+        hint_text: "Ingrese su número a vincular"
+        icon_right: "phone"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.37}
+        size_hint_x: None 
+        width: 290
+    
+    MDRectangleFlatButton:
+        text:'Registrarse'
+        pos_hint:{'center_x':0.5,'center_y':0.26}
+        on_release: 
+            root.validar_crear_usuario()
+    
+    MDRectangleFlatButton:
+        text: 'Regresar'
+        pos_hint: {'center_x':0.5, 'center_y':0.15}
+        on_release: 
+            root.manager.current = 'medico'
+            root.reset()
+    
+<RecuperarCuenta>:
+    name: 'recuperar_cuenta'
+    usuario: usuario
+    numero: numero
+    correo: correo
+    MDLabel:
+        text: 'Recuperar Cuenta'
+        halign: 'center'
+        font_style: 'H6'
+        text_color: app.theme_cls.primary_color
+        bold: True
+        pos_hint: {'center_x':0.5, 'center_y':0.9}
+    MDLabel: 
+        text: 'Si ha olvidado su clave, ingrese su usuario, su número de celular y su correo vinculado'
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y': 0.8}
+    MDTextField:
+        id: usuario
+        hint_text: "Usuario"
+        icon_right: "account"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.6}
+        size_hint_x: None
+        width: 290
+    MDTextField:
+        id: numero
+        hint_text: "Número de celular"
+        icon_right: "phone"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.5}
+        size_hint_x: None
+        width: 290
+    MDTextField:
+        id: correo
+        hint_text: "Correo"
+        icon_right: "email"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.4}
+        size_hint_x: None
+        width: 290
+    MDRectangleFlatButton:
+        text:'Ingresar'
+        pos_hint:{'center_x':0.5,'center_y':0.25}
+        on_release: 
+            root.validar_recuperar_usuario()
+        
+    MDRectangleFlatButton:
+        text: 'Regresar'
+        pos_hint: {'center_x':0.5, 'center_y':0.15}
+        on_release: root.manager.current = 'medico'
+        on_release: root.reset()
+        
+<MenuMedico>:
+    name: 'menu_medico'
+    avatar: avatar
+    nombre_medico: nombre_medico
+    bienvenida: bienvenida
+    Screen:
+        NavigationLayout:
+            ScreenManager:
+                Screen:
+                    BoxLayout:
+                        orientation: 'vertical'
+                        MDToolbar:
+                            title: 'Menu de Médico'
+                            left_action_items: [["menu",lambda x: nav_drawer.toggle_nav_drawer()]]
+                            elevation: 8
+                        Widget:
+                    MDLabel:
+                        text: 'Bienvenido'
+                        text_color: app.theme_cls.primary_color
+                        halign: 'center'
+                        font_style: 'H4'
+                        bold: True
+                        pos_hint: {'center_x':0.5, 'center_y':0.8}
+                    MDLabel:
+                        id: bienvenida
+                        text: ''
+                        halign: 'center'
+                        font_style: 'H5'
+                        pos_hint: {'center_x':0.5, 'center_y':0.715}
+                    MDLabel:
+                        text: 'Selecciona una opcion que desea realizar'
+                        halign: 'center'
+                        font_style: 'H6'
+                        pos_hint: {'center_x':0.5, 'center_y':0.625}
+                    MDRectangleFlatButton:
+                        text:'Toma de Datos'
+                        pos_hint:{'center_x':0.5,'center_y':0.5}
+                        on_release: 
+                            root.toma_de_datos()
+                    MDRectangleFlatButton:
+                        text:'Registro Actual de Pacientes'
+                        pos_hint:{'center_x':0.5,'center_y':0.4}
+                        on_release: 
+                            root.muestra_de_pacientes()
+                    MDRectangleFlatButton:
+                        text:'Busqueda de Pacientes'
+                        pos_hint:{'center_x':0.5,'center_y':0.3}
+                        on_release: 
+                            root.busqueda_de_pacientes() 
+                    MDRectangleFlatButton:
+                        text: 'Salir'
+                        pos_hint: {'center_x':0.5, 'center_y':0.2}
+                        on_release:
+                            root.salir_sesion()
+                            
+            MDNavigationDrawer:
+                id: nav_drawer
+                
+                BoxLayout:
+                    orientation: 'vertical'
+                    padding: "8dp"
+                    spacing: "8dp"
+                    
+                    Image:
+                        id: avatar
+                        size_hint: (1,1)
+                        source: "usuario.png"
+                        
+                    MDLabel:
+                        id: nombre_medico
+                        text: ""
+                        font_style: "Subtitle1"
+                        size_hint_y: None
+                        height: self.texture_size[1]
+                        
+                    MDLabel:
+                        text: "Menu de Opciones"
+                        size_hint_y: None
+                        font_style: "Caption"
+                        height: self.texture_size[1]
+                        
+                    ScrollView:
+                        MDList:
+                            OneLineIconListItem:
+                                on_release: root.mostrar_perfil()
+                                text: "Perfil"
+                                IconLeftWidget:
+                                    icon: "face-profile"
+                                       
+                            OneLineIconListItem:
+                                on_release: root.cambiar_contrasena()
+                                text: "Cambiar Clave"
+                                IconLeftWidget:
+                                    icon: "upload"                                        
+                               
+                            OneLineIconListItem:
+                                on_press: root.salir_sesion()
+                                text: "Salir de Sesión"
+                                IconLeftWidget:
+                                    icon: "logout"
+                                
+<PerfilMedico>:
+    name: 'perfil_medico'
+    medico_medico: medico_medico
+    clave_medico: clave_medico
+    celular_medico: celular_medico
+    correo: correo
+    
+    MDLabel:
+        text: 'Médico (usuario)'
+        halign: 'center'
+        font_style: 'H6'
+        bold: True
+        pos_hint: {'center_x':0.5, 'center_y':0.9}
+    MDLabel:
+        id: medico_medico
+        text: ""
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.8}
+    MDLabel:
+        text: 'Correo Vinculado'
+        halign: 'center'
+        font_style: 'H6'
+        bold: True
+        pos_hint: {'center_x':0.5, 'center_y':0.7}
+    MDLabel:
+        id: correo
+        text: ""
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.6}
+    MDLabel:
+        text: 'Clave del usuario'
+        halign: 'center'
+        font_style: 'H6'
+        bold: True
+        pos_hint: {'center_x':0.5, 'center_y':0.5}
+    MDLabel:
+        id: clave_medico
+        text: ""
+        password: True
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.4}  
+    MDLabel:
+        text: 'Celular vinculado'
+        halign: 'center'
+        font_style: 'H6'
+        bold: True
+        pos_hint: {'center_x':0.5, 'center_y':0.3}
+    MDLabel:
+        id: celular_medico
+        text: ""
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.2}      
+    MDRectangleFlatButton:
+        text: 'regresar'
+        pos_hint: {'center_x':0.5, 'center_y':0.1}
+        on_release:
+            root.manager.current = 'menu_medico'
+            root.reset()
+
+<CambiarClave>:
+    name: 'cambiar_clave'
+    nueva_clave_1: nueva_clave_1
+    nueva_clave_2: nueva_clave_2
+    nombre_medico: nombre_medico
+    Screen:
+        NavigationLayout:
+            ScreenManager:
+                Screen:
+                    BoxLayout:
+                        orientation: 'vertical'
+                        MDToolbar:
+                            id: estado
+                            title: 'Cambiar Clave'
+                            left_action_items: [["menu",lambda x: nav_drawer.toggle_nav_drawer()]]
+                            elevation: 8
+                        Widget:
+                    MDLabel:
+                        text: 'Cambio de Contraseña'
+                        text_color: app.theme_cls.primary_color
+                        halign: 'center'
+                        font_style: 'H4'
+                        bold: True
+                        pos_hint: {'center_x':0.5, 'center_y':0.775}
+                    MDLabel:
+                        text: 'Por favor, ingrese la nueva clave que quiera asignar'
+                        halign: 'center'
+                        font_style: 'H6'
+                        pos_hint: {'center_x':0.5, 'center_y':0.6}
+                    MDTextField:
+                        id: nueva_clave_1
+                        hint_text: "Nueva Clave"
+                        pos_hint: {'center_x':0.5, 'center_y':0.45}
+                        password: True
+                        size_hint_x: None
+                        width: 290
+                    MDIconButton:
+                        icon: "eye-off"
+                        ripple_scale: .5
+                        pos_hint: {"center_y": 0.455}
+                        pos: nueva_clave_1.width - self.width + dp(8), 0
+                        on_release:
+                            self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+                            nueva_clave_1.password = False if nueva_clave_1.password is True else True 
+                    MDTextField:
+                        id: nueva_clave_2
+                        hint_text: "Confirmar nueva clave"
+                        password: True
+                        pos_hint: {'center_x':0.5, 'center_y':0.35}
+                        size_hint_x: None
+                        width: 290
+                    MDIconButton:
+                        icon: "eye-off"
+                        ripple_scale: .5
+                        pos_hint: {"center_y": 0.355}
+                        pos: nueva_clave_2.width - self.width + dp(8), 0
+                        on_release:
+                            self.icon = "eye" if self.icon == "eye-off" else "eye-off"
+                            nueva_clave_2.password = False if nueva_clave_2.password is True else True 
+                    MDRectangleFlatButton:
+                        text:'Ingresar nueva clave'
+                        pos_hint:{'center_x':0.5,'center_y':0.25}
+                        on_release: 
+                            root.verificar_clave()                   
+                    MDRectangleFlatButton:
+                        text: 'Regresar'
+                        pos_hint: {'center_x':0.5, 'center_y':0.15}
+                        on_release:
+                            root.regresar()        
+            MDNavigationDrawer:
+                id: nav_drawer          
+                BoxLayout:
+                    orientation: 'vertical'
+                    padding: "8dp"
+                    spacing: "8dp"              
+                    Image:
+                        id: avatar
+                        size_hint: (1,1)
+                        source: "usuario.png"          
+                    MDLabel:
+                        id: nombre_medico
+                        text: ""
+                        font_style: "Subtitle1"
+                        size_hint_y: None
+                        height: self.texture_size[1]                  
+                    MDLabel:
+                        text: "Menu de Opciones"
+                        size_hint_y: None
+                        font_style: "Caption"
+                        height: self.texture_size[1]            
+                    ScrollView:
+                        MDList:
+                            OneLineIconListItem:
+                                on_release: root.mostrar_perfil()
+                                text: "Perfil"
+                                IconLeftWidget:
+                                    icon: "face-profile"                           
+                            OneLineIconListItem:
+                                on_release: root.manager.current = 'cambiar_clave'
+                                text: "Cambiar Contraseña"
+                                IconLeftWidget:
+                                    icon: "upload"                                                        
+                            OneLineIconListItem:
+                                on_press: root.salir_sesion()
+                                text: "Salir de Sesion"
+                                IconLeftWidget:
+                                    icon: "logout"
+
+<TomaDatos1>:
+    name: 'toma_datos1'
+    edad: edad
+    peso: peso
+    talla: talla
+    paciente: paciente
+    masculino: masculino
+    femenino: femenino
+    fractura_si: fractura_si
+    fractura_no: fractura_no
+    fuma_si: fuma_si
+    fuma_no: fuma_no
+    MDLabel:
+        text: '1. Datos del Paciente'
+        halign: 'center'
+        pos_hint: {'center_x':0.5 , 'center_y':0.9}
+        font_style: 'H6'
+        text_color: app.theme_cls.primary_color
+    MDTextField:
+        id: paciente
+        hint_text: "DNI del paciente"
+        icon_right: "language-python"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.8}
+        size_hint_x: None
+        width: 260
+    MDTextField:
+        id: edad
+        hint_text: "Edad del Paciente"
+        icon_right: "language-python"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.71}
+        size_hint_x: None
+        width: 260
+    MDTextField:
+        id: peso
+        hint_text: "Peso (en kg)"
+        icon_right: "language-python"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.62}
+        size_hint_x: None
+        width: 260
+    MDTextField:
+        id: talla
+        hint_text: "Talla (en cm)"
+        icon_right: "language-python"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.53}
+        size_hint_x: None
+        width: 260
+    MDLabel:
+        text: 'Sexo'
+        halign: 'center'
+        pos_hint: {'center_x':0.25 , 'center_y':0.41}
+        font_style: 'Subtitle2'
+    MDLabel:
+        text: 'Masculino'
+        halign: 'center'
+        pos_hint: {'center_x':0.5 , 'center_y':0.46}
+        font_style: 'Subtitle2'
+    MDCheckbox:
+        id: masculino
+        size_hint: None, None
+        size: dp(48), dp(48)
+        pos_hint: {'center_x':0.5, 'center_y':0.41}
+        active: False
+        on_active:
+            root.checkbox_m()
+    MDLabel:
+        text: 'Femenino'
+        halign: 'center'
+        pos_hint: {'center_x':0.8 , 'center_y':0.46}
+        font_style: 'Subtitle2'
+    MDCheckbox:
+        id: femenino
+        size_hint: None, None
+        size: dp(48), dp(48)
+        pos_hint: {'center_x':0.8, 'center_y':0.41}
+        active: False
+        on_active: 
+            root.checkbox_f()
+    MDLabel:
+        text: '¿Fractura Actual?'
+        halign: 'center'
+        pos_hint: {'center_x':0.3 , 'center_y':0.3}
+        font_style: 'Subtitle2'
+    MDLabel:
+        text: 'Si'
+        halign: 'center'
+        pos_hint: {'center_x':0.6 , 'center_y':0.35}
+        font_style: 'Subtitle2'
+    MDCheckbox:
+        id: fractura_si
+        size_hint: None, None
+        size: dp(48), dp(48)
+        pos_hint: {'center_x':0.6, 'center_y':0.3}
+        active: False
+        on_active:
+            root.checkbox_fractura_si()
+    MDLabel:
+        text: 'No'
+        halign: 'center'
+        pos_hint: {'center_x':0.8 , 'center_y':0.35}
+        font_style: 'Subtitle2'
+    MDCheckbox:
+        id: fractura_no
+        size_hint: None, None
+        size: dp(48), dp(48)
+        pos_hint: {'center_x':0.8, 'center_y':0.3}
+        active: False
+        on_active: 
+            root.checkbox_fractura_no()
+    MDLabel:
+        text: '¿Fumador Activo?'
+        halign: 'center'
+        pos_hint: {'center_x':0.3 , 'center_y':0.19}
+        font_style: 'Subtitle2'
+    MDLabel:
+        text: 'Si'
+        halign: 'center'
+        pos_hint: {'center_x':0.6 , 'center_y':0.24}
+        font_style: 'Subtitle2'
+    MDCheckbox:
+        id: fuma_si
+        size_hint: None, None
+        size: dp(48), dp(48)
+        pos_hint: {'center_x':0.6, 'center_y':0.19}
+        active: False
+        on_active:
+            root.checkbox_fumador_si()
+    MDLabel:
+        text: 'No'
+        halign: 'center'
+        pos_hint: {'center_x':0.8 , 'center_y':0.24}
+        font_style: 'Subtitle2'
+    MDCheckbox:
+        id: fuma_no
+        size_hint: None, None
+        size: dp(48), dp(48)
+        pos_hint: {'center_x':0.8, 'center_y':0.19}
+        active: False
+        on_active:
+            root.checkbox_fumador_no()        
+    MDRectangleFlatButton:
+        text: 'Regresar'
+        pos_hint: {'center_x':0.3, 'center_y':0.1}
+        on_release:
+            root.validar_salida()    
+    MDRectangleFlatButton:
+        text: 'Siguiente'
+        pos_hint: {'center_x':0.75, 'center_y':0.1}
+        on_release:
+            root.siguiente_pagina()
+            
+<TomaDatos2>:
+    name: 'toma_datos2'
+    t_score1 : t_score1
+    t_score2 : t_score2
+    valor_dmo1 : valor_dmo1
+    valor_dmo2 : valor_dmo2    
+    MDLabel:
+        text: '2. Datos Medicos'
+        halign: 'center'
+        pos_hint: {'center_x':0.5 , 'center_y':0.9}
+        font_style: 'H6'
+        text_color: app.theme_cls.primary_color
+    MDLabel:
+        text: 'DMO (Densitometría)'
+        halign: 'center'
+        pos_hint: {'center_x':0.5 , 'center_y':0.8}
+        font_style: 'Subtitle1'
+    MDTextField:
+        id: valor_dmo1
+        hint_text: "DMO Cuello Femoral(g/cm^2)"
+        icon_right: "coffee"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.7}
+        size_hint_x: None
+        width: 260
+    MDTextField:
+        id: valor_dmo2
+        hint_text: "DMO Columna L1^L4 (g/cm^2)"
+        icon_right: "coffee"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.6}
+        size_hint_x: None
+        width: 260
+    MDLabel:
+        text: 'Valores de T-Score'
+        halign: 'center'
+        pos_hint: {'center_x':0.5 , 'center_y':0.5}
+        font_style: 'Subtitle1'
+    MDTextField:
+        id: t_score1
+        hint_text: "T Score Cuello Femoral"
+        icon_right: "coffee"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.4}
+        size_hint_x: None
+        width: 260
+    MDTextField:
+        id: t_score2
+        hint_text: "T Score Columna (L1^L4)"
+        icon_right: "coffee"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.3}
+        size_hint_x: None
+        width: 260
+        
+    MDRectangleFlatButton:
+        text: 'Ingresar'
+        pos_hint: {'center_x':0.5, 'center_y':0.2}
+        on_release:
+            root.ingresar_datos()
+    MDRectangleFlatButton:
+        text: 'Regresar'
+        pos_hint: {'center_x':0.5, 'center_y':0.1}
+        on_release:
+            root.regresar_pagina()
+    
+<MostrarResultados>:
+    name: 'mostrar_resultados'
+    resultado_dmo: resultado_dmo
+    resultado_adicional: resultado_adicional
+    
+    MDLabel:
+        text: 'Resultados Generales'
+        halign: 'center'
+        pos_hint: {'center_x':0.5 , 'center_y':0.9}
+        font_style: 'H4'
+        bold: True
+        text_color: app.theme_cls.primary_color
+    
+    MDLabel:
+        text: 'Estimacion a partir de la densimetria osea:'
+        halign: 'center'
+        pos_hint: {'center_x':0.5 , 'center_y':0.775}
+        font_style: 'Subtitle1'
+        bold: True
+        text_color: app.theme_cls.primary_color
+    
+    MDLabel:
+        text: ''
+        id: resultado_dmo
+        halign: 'center'
+        pos_hint: {'center_x':0.5, 'center_y':0.675}
+        text_color: app.theme_cls.primary_color
+    
+    MDLabel:
+        text: 'Resultados Adicionales'
+        halign: 'center'
+        italic: True
+        bold: True
+        pos_hint: {'center_x':0.5 , 'center_y':0.6}
+        font_style: 'Subtitle1'
+        text_color: app.theme_cls.primary_color
+    
+    MDLabel:
+        text: ''
+        id: resultado_adicional
+        halign: 'center'
+        pos_hint: {'center_x':0.5, 'center_y':0.45}
+        text_color: app.theme_cls.primary_color
+    
+    MDRectangleFlatButton:
+        text: 'Recomendaciones'
+        pos_hint: {'center_x':0.5, 'center_y':0.3}
+        on_release:
+            root.recomendaciones()
+    
+    MDRectangleFlatButton:
+        text: 'Eliminar registro'
+        pos_hint: {'center_x':0.5, 'center_y':0.2}
+        on_release:
+            root.eliminar_registro()
+    
+    MDRectangleFlatButton:
+        text: 'Ok'
+        pos_hint: {'center_x':0.5, 'center_y':0.1}
+        on_release:
+            root.reset()
+            root.manager.current = 'menu_medico'
+
+<RecomendacionesMedico>:
+    name: 'recomendaciones_medico'
+    fumador: fumador
+    imc: imc
+    res_ost: res_ost
+    res_edad: res_edad
+        
+    MDLabel:
+        text: 'Recomendaciones'
+        halign: 'center'
+        pos_hint: {'center_x':0.5 , 'center_y':0.9}
+        font_style: 'H6'
+        bold: True
+        text_color: app.theme_cls.primary_color
+    MDLabel:
+        id: fumador
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint:{'center_x':0.5, 'center_y':0.8}
+    MDLabel:
+        id: imc
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint:{'center_x':0.5, 'center_y':0.7}
+    MDLabel:
+        id: res_ost
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint:{'center_x':0.5, 'center_y':0.575}
+    MDLabel:
+        id: res_edad
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint:{'center_x':0.5, 'center_y':0.4}
+    
+    MDRectangleFlatButton:
+        text: 'Regresar'
+        pos_hint:{'center_x':0.5, 'center_y':0.15}
+        spacing: dp(20)
+        on_release:
+            root.reset()
+            root.manager.current = 'mostrar_resultados'  
+    
+<RegistroPacientes>:
+    name: 'registro_pacientes'
+    box: box
+    Screen:    
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: dp(20)
+            MDToolbar:
+                title: 'Pacientes'
+                elevation: 8
+                Widget:
+                
+            MDLabel:
+                text: 'Los datos son de la ultima toma registrada'
+                text_color: app.theme_cls.primary_color
+                halign: 'center'
+                font_style: 'Subtitle1'
+                pos_hint:{'center_x':0.5, 'center_y':0.825}
+                bold: True
+                size_hint_y: None
+                height: self.texture_size[1]
+            MDGridLayout:
+                cols:1
+                height: self.minimum_height
+                ScrollView:        
+                    MDList:
+                        id: box
+                     
+            MDRectangleFlatButton:
+                text: 'regresar'
+                pos_hint:{'center_x':0.5, 'center_y':0.1}
+                spacing: dp(20)
+                on_release:
+                    root.reset()
+                    root.manager.current = 'menu_medico'
+                    
+<BusquedaPacientes>:
+    name: 'busqueda_pacientes'
+    paciente: paciente
+    MDLabel:
+        text: 'Busqueda de Pacientes por Registro'
+        text_color: app.theme_cls.primary_color
+        halign: 'center'
+        font_style: 'H4'
+        bold: True
+        pos_hint: {'center_x':0.5, 'center_y':0.85}
+    
+    MDLabel:
+        text: 'Para observar un registro especifico, ingrese su paciente a buscar'
+        text_color: app.theme_cls.primary_color
+        halign: 'center'
+        font_style: 'Subtitle1'
+        bold: True
+        pos_hint: {'center_x':0.5, 'center_y':0.625}
+    
+    MDTextField:
+        id: paciente
+        hint_text: "DNI del paciente"
+        icon_right: "language-python"
+        icon_right_color: app.theme_cls.primary_color
+        pos_hint: {'center_x':0.5, 'center_y':0.45}
+        size_hint_x: None
+        width: 250
+    
+    MDRectangleFlatButton:
+        text: 'Ingresar Busqueda'
+        pos_hint:{'center_x':0.5, 'center_y':0.25}
+        spacing: dp(20)
+        on_release:
+            root.validar_ingreso()
+    
+    MDRectangleFlatButton:
+        text: 'Regresar'
+        pos_hint:{'center_x':0.5, 'center_y':0.15}
+        spacing: dp(20)
+        on_release:
+            root.reset()
+            root.manager.current = 'menu_medico'   
+
+<Toma_Paciente>:
+    name: 'toma_paciente'
+    pacient: pacient
+    num_toma: num_toma
+    box: box
+    Screen:
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: dp(20)
+            
+            MDToolbar:
+                title: 'Tomas'
+                elevation: 8
+                Widget:
+            
+            MDLabel:
+                id: pacient
+                text: ''
+                text_color: app.theme_cls.primary_color
+                halign: 'center'
+                font_style: 'H6'
+                size_hint_y: None
+                height: self.texture_size[1]
+            ScrollView:       
+                MDList:
+                    id: box
+                    pos_hint:{'center_x':0.5, 'center_y':0.7}
+            MDTextField:
+                id: num_toma
+                hint_text: "Ingrese la busqueda (ej Toma 1)"
+                icon_right: "language-python"
+                icon_right_color: app.theme_cls.primary_color
+                pos_hint:{'center_x':0.5, 'center_y':0.2}
+                width: 290
+            MDRectangleFlatButton:
+                text: 'Buscar'
+                pos_hint:{'center_x':0.5, 'center_y':0.1}
+                on_release:
+                    root.buscar_toma()
+            MDRectangleFlatButton:
+                text: 'Regresar'
+                pos_hint:{'center_x':0.5, 'center_y':0}
+                on_release:
+                    root.reset_all()
+                    root.manager.current = 'busqueda_pacientes'
+            
+                                
+<Toma_Paciente_Final>:
+    name: 'toma_paciente_final'
+    fecha_toma: fecha_toma
+    edad_peso_talla: edad_peso_talla
+    t_score1: t_score1
+    t_score2: t_score2
+    res_ost: res_ost
+    fract: fract
+    label1: label1
+    label2: label2
+    
+    MDLabel:
+        text: "Resultados de la Toma"
+        halign: 'center'
+        font_style: 'H4'
+        pos_hint: {'center_x':0.5, 'center_y': 0.9}
+        bold: True
+    MDLabel:
+        id: fecha_toma
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.775}
+    MDLabel:
+        id: edad_peso_talla
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.7}
+    MDLabel:
+        id: label1
+        text: ''
+        italic: True
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.625}
+    MDLabel:
+        id: t_score1
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.575}
+    MDLabel:
+        id: label2
+        text: ''
+        italic: True
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.525}
+    MDLabel:
+        id: t_score2
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.475}
+    MDLabel:
+        id: fract
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.425}
+    MDLabel:
+        id: res_ost
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.35}
+    MDRectangleFlatButton:
+        text: 'Menu Principal'
+        pos_hint:{'center_x':0.8, 'center_y':0.125}
+        on_release:
+            root.reset()
+            root.manager.current = 'menu_medico'
+    MDRectangleFlatButton:
+        text: 'Buscar otro Paciente'
+        pos_hint:{'center_x':0.3, 'center_y':0.125}
+        on_release:
+            root.reset()
+            root.manager.current = 'busqueda_pacientes'  
+    MDRectangleFlatButton:
+        text: 'Buscar otra Toma con Mismo Paciente'
+        pos_hint:{'center_x':0.5, 'center_y':0.225}
+        on_release:
+            root.reset()
+            root.manager.current = 'toma_paciente'    
+        
+<MenuPaciente>:
+    name: 'menu_paciente'
+    MDLabel:
+        text: 'Bienvenido al Perfil de Paciente'
+        text_color: app.theme_cls.primary_color
+        halign: 'center'
+        font_style: 'H4'
+        bold: True
+        pos_hint: {'center_x':0.5, 'center_y':0.85}
+    MDLabel:
+        text: '¿Que desea visualizar?'
+        text_color: app.theme_cls.primary_color
+        halign: 'center'
+        font_style: 'H6'
+        pos_hint: {'center_x':0.5, 'center_y':0.7}
+    MDLabel:
+        text: 'Elija una de las siguientes opciones de las que se muestran'
+        text_color: app.theme_cls.primary_color
+        halign: 'center'
+        italic: True
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.625}
+    MDRectangleFlatButton:
+        text:'Ver Ultimo Registro'
+        pos_hint:{'center_x':0.5,'center_y':0.5}
+        on_release: 
+            root.ver_resultados()
+    MDRectangleFlatButton:
+        text:'Historial de Registros'
+        pos_hint:{'center_x':0.5,'center_y':0.4}
+        on_release:
+            root.ver_historial()
+    MDRectangleFlatButton:
+        text:'Datos de médico'
+        pos_hint:{'center_x':0.5,'center_y':0.3}
+        on_release: 
+            root.datos_medico()    
+                    
+    MDRectangleFlatButton:
+        text: 'Salir'
+        pos_hint: {'center_x':0.5, 'center_y':0.2}
+        on_release:
+            root.manager.current = 'menu'
+
+<ResultadosPaciente>:
+    name: 'resultados_paciente'
+    resultado_ost: resultado_ost
+    indice_masa_corporal: indice_masa_corporal
+    res_imc: res_imc
+    MDLabel:
+        text: 'Estado Actual General'
+        halign: 'center'
+        font_style: 'H6'
+        bold: True
+        pos_hint: {'center_x':0.5, 'center_y':0.9}
+    MDLabel:
+        id: resultado_ost
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.8}
+    MDLabel:
+        id: indice_masa_corporal
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle2'
+        pos_hint: {'center_x':0.5, 'center_y':0.7}
+    MDLabel:
+        id: res_imc
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.6}
+    MDLabel:
+        id: res_edad
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.5}
+    MDLabel:
+        text: 'Los resultados mostrados son de la ultima toma registrada'
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.3}
+    MDFillRoundFlatButton:
+        text: 'Recomendaciones'
+        pos_hint: {'center_x':0.5, 'center_y': 0.2}
+        on_release:
+            root.recomendaciones()
+    MDRectangleFlatButton:
+        text: 'Regresar'
+        pos_hint: {'center_x':0.5, 'center_y':0.1}
+        on_release:
+            root.manager.current = 'menu_paciente'
+            root.reset()
+
+<RecomendacionesPaciente>:
+    name: 'recomendaciones_paciente'
+    fumador: fumador
+    imc: imc
+    res_ost: res_ost
+    res_edad: res_edad
+    
+    MDLabel:
+        text: 'Recomendaciones'
+        halign: 'center'
+        pos_hint: {'center_x':0.5 , 'center_y':0.9}
+        font_style: 'H6'
+        bold: True
+        text_color: app.theme_cls.primary_color
+    MDLabel:
+        id: fumador
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint:{'center_x':0.5, 'center_y':0.8}
+    MDLabel:
+        id: imc
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint:{'center_x':0.5, 'center_y':0.7}
+    MDLabel:
+        id: res_ost
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint:{'center_x':0.5, 'center_y':0.575}
+    MDLabel:
+        id: res_edad
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint:{'center_x':0.5, 'center_y':0.4}
+    
+    MDRectangleFlatButton:
+        text: 'Regresar'
+        pos_hint:{'center_x':0.5, 'center_y':0.175}
+        spacing: dp(20)
+        on_release:
+            root.reset()
+            root.manager.current = 'resultados_paciente' 
+        
+            
+<DatosMedico>:
+    name: 'datos_medico'
+    nombre_medico: nombre_medico
+    celular: celular
+    correo: correo
+    texto_adicional: texto_adicional
+    MDLabel:
+        text: "Medico Encargado"
+        halign: 'center'
+        font_style: 'H4'
+        pos_hint: {'center_x':0.5, 'center_y': 0.9}
+        bold: True
+    MDLabel:
+        id: nombre_medico
+        text: ''
+        halign: 'center'
+        font_style: 'H5'
+        pos_hint: {'center_x':0.5, 'center_y':0.8}
+    MDLabel:
+        id: correo
+        text: ''
+        halign: 'center'
+        font_style: 'H6'
+        pos_hint: {'center_x':0.5, 'center_y': 0.675}
+    MDLabel:
+        id: celular
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.5}
+    MDLabel:
+        id: texto_adicional
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y': 0.35}
+    MDRectangleFlatButton:
+        text: 'Regresar'
+        pos_hint: {'center_x':0.5, 'center_y':0.15}
+        on_release:
+            root.manager.current = 'menu_paciente'
+            root.reset() 
+
+<HistorialPaciente>:
+    name: 'historial_paciente'
+    pacient: pacient
+    num_toma: num_toma
+    box: box
+    Screen:
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: dp(20)
+            
+            MDToolbar:
+                title: 'Registro'
+                elevation: 8
+                Widget:
+            
+            MDLabel:
+                id: pacient
+                text: ''
+                text_color: app.theme_cls.primary_color
+                halign: 'center'
+                font_style: 'H6'
+                size_hint_y: None
+                height: self.texture_size[1]
+            ScrollView:       
+                MDList:
+                    id: box
+                    pos_hint:{'center_x':0.5, 'center_y':0.7}
+            MDTextField:
+                id: num_toma
+                hint_text: "Ingrese la busqueda (ej Toma 1)"
+                icon_right: "language-python"
+                icon_right_color: app.theme_cls.primary_color
+                pos_hint:{'center_x':0.5, 'center_y':0.2}
+                width: 290
+            MDRectangleFlatButton:
+                text: 'Buscar'
+                pos_hint:{'center_x':0.5, 'center_y':0.1}
+                on_release:
+                    root.buscar_toma()
+            MDRectangleFlatButton:
+                text: 'Regresar'
+                pos_hint:{'center_x':0.5, 'center_y':0}
+                on_release:
+                    root.reset_all()
+                    root.manager.current = 'menu_paciente'
+                    
+<RegistroFinal>:
+    name: 'registro_final'
+    fecha_toma: fecha_toma
+    edad_peso_talla: edad_peso_talla
+    t_score1: t_score1
+    t_score2: t_score2
+    res_ost: res_ost
+    fract: fract
+    label1: label1
+    label2: label2
+    
+    MDLabel:
+        text: "Resultados de la Toma"
+        halign: 'center'
+        font_style: 'H4'
+        pos_hint: {'center_x':0.5, 'center_y': 0.9}
+        bold: True
+    MDLabel:
+        id: fecha_toma
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.775}
+    MDLabel:
+        id: edad_peso_talla
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.7}
+    MDLabel:
+        id: label1
+        text: ''
+        italic: True
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.625}
+    MDLabel:
+        id: t_score1
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.575}
+    MDLabel:
+        id: label2
+        text: ''
+        italic: True
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.525}
+    MDLabel:
+        id: t_score2
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.475}
+    MDLabel:
+        id: fract
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.425}
+    MDLabel:
+        id: res_ost
+        text: ''
+        halign: 'center'
+        font_style: 'Subtitle1'
+        pos_hint: {'center_x':0.5, 'center_y':0.35}
+    MDRectangleFlatButton:
+        text: 'Menu Principal'
+        pos_hint:{'center_x':0.5, 'center_y':0.125}
+        on_release:
+            root.reset()
+            root.manager.current = 'menu_paciente'
+     
+    MDRectangleFlatButton:
+        text: 'Buscar otra Toma'
+        pos_hint:{'center_x':0.5, 'center_y':0.225}
+        on_release:
+            root.reset()
+            root.manager.current = 'historial_paciente' 
