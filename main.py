@@ -13,8 +13,6 @@ def truncate(number, digits) -> float:
     stepper = 10.0 ** digits
     return math.trunc(stepper * number) / stepper
 
-Window.size = (300,500)
-
 db = Database()
 
 class MenuScreen(Screen):
